@@ -1,3 +1,15 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+body {
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.alert {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}

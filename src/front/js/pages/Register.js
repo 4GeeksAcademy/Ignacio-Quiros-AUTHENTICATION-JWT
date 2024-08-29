@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { Context } from '../store/appContext';
 import "../../styles/forms.css"; // Asegúrate de que esta ruta sea correcta
 
-const Login = () => {
+const Register = () => {
     const { actions } = useContext(Context);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -14,16 +14,16 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await actions.login(email, password);
-            navigate('/private');
+            await actions.register(email, password);
+            navigate('/login');
         } catch (err) {
-            setError(err.message || "Login failed");
+            setError(err.message || "Registration failed");
         }
     };
 
     return (
         <div className="form-container">
-            <h2>Login</h2>
+            <h2>Register</h2>
             {error && <p className="error-message">{error}</p>}
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
@@ -44,10 +44,10 @@ const Login = () => {
                         required 
                     />
                 </div>
-                <button type="submit">Login</button>
+                <button type="submit">Register</button>
             </form>
         </div>
     );
 };
 
-export default Login;
+export default Register;
