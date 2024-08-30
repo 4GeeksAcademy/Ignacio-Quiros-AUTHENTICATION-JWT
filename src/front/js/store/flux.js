@@ -2,52 +2,36 @@ const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
             message: null,
-            demo: [
-                {
-                    title: "FIRST",
-                    background: "white",
-                    initial: "white"
-                },
-                {
-                    title: "SECOND",
-                    background: "white",
-                    initial: "white"
-                }
-            ],
-            isAuthenticated: false,  // Añadir estado de autenticación
-            user: null,  // Información del usuario autenticado
+            isAuthenticated: false,
+            user: null,
         },
         actions: {
-            // Función para iniciar sesión
             login: async (email, password) => {
-				try {
-					const response = await fetch(process.env.BACKEND_URL + '/login', {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json',
-						},
-						body: JSON.stringify({ email, password }),
-					});
-					const data = await response.json();
-					if (response.ok) {
-						localStorage.setItem('token', data.access_token); // Almacena el token
-						setStore({ isAuthenticated: true });
-						return data;
-					} else {
-						throw new Error(data.msg || 'Login failed');
-					}
-				} catch (error) {
-					console.error("Login error", error);
-					throw error;
-				}
-			},
-            // Función para cerrar sesión
-			logout: () => {
-				// Elimina el token del almacenamiento local o del estado global
-				localStorage.removeItem('token'); // O el nombre que uses
-				setStore({ isAuthenticated: false });
-			},
-            // Función para verificar el estado de autenticación
+                try {
+                    const response = await fetch(process.env.BACKEND_URL + '/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ email, password }),
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                        localStorage.setItem('token', data.access_token); // Store the Token
+                        setStore({ isAuthenticated: true, user: data.user_data });
+                        return data;
+                    } else {
+                        throw new Error(data.msg || 'Login failed');
+                    }
+                } catch (error) {
+                    console.error("Login error", error);
+                    throw error;
+                }
+            },
+            logout: () => {
+                localStorage.removeItem('token');
+                setStore({ isAuthenticated: false, user: null });
+            },
             checkAuth: async () => {
                 const token = localStorage.getItem("token");
                 if (token) {
@@ -61,17 +45,16 @@ const getState = ({ getStore, getActions, setStore }) => {
                             const data = await response.json();
                             setStore({ isAuthenticated: true, user: data.user_data });
                         } else {
-                            setStore({ isAuthenticated: false });
+                            setStore({ isAuthenticated: false, user: null });
                         }
                     } catch (error) {
                         console.error("Auth check error", error);
-                        setStore({ isAuthenticated: false });
+                        setStore({ isAuthenticated: false, user: null });
                     }
                 } else {
-                    setStore({ isAuthenticated: false });
+                    setStore({ isAuthenticated: false, user: null });
                 }
             },
-            // Ejemplo de obtener mensaje
             getMessage: async () => {
                 try {
                     const resp = await fetch(process.env.BACKEND_URL + "/api/hello");
@@ -82,7 +65,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log("Error loading message from backend", error);
                 }
             },
-            // Ejemplo de cambiar color
             changeColor: (index, color) => {
                 const store = getStore();
                 const demo = store.demo.map((elm, i) => {

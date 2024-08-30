@@ -20,8 +20,11 @@ app.url_map.strict_slashes = False
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT-KEY")
 jwt = JWTManager(app)
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=2)
-CORS(app)
-bcrypt = Bcrypt(app)  # Inicializa bcrypt
+
+# Configuración de CORS
+cors = CORS(app, resources={r"/*": {"origins": "https://improved-telegram-gj99xprvv9gc96px-3000.app.github.dev"}})
+
+bcrypt = Bcrypt(app)
 
 # database configuration
 db_url = os.getenv("DATABASE_URL")
@@ -36,8 +39,6 @@ db.init_app(app)
 
 # add the admin
 setup_admin(app)
-
-# add the admin
 setup_commands(app)
 
 # Add all endpoints from the API with a "api" prefix
@@ -86,7 +87,6 @@ def register():
         db.session.rollback()
         return jsonify({'msg': str(e)}), 500
 
-
 @app.route("/login", methods=["POST"])
 def login():
     body = request.get_json(silent=True)
@@ -103,7 +103,6 @@ def login():
 
     access_token = create_access_token(identity=user.email)
     return jsonify(access_token=access_token), 200
-
 
 @app.route("/private", methods=["GET"])
 @jwt_required()

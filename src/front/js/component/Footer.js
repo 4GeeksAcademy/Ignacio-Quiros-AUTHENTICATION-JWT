@@ -1,13 +1,15 @@
-import React from "react";
+import React from 'react'
 
-export const Footer = () => (
-    <footer className="footer mt-auto py-3 text-center">
-        <p>
-            Made with <i className="fa fa-heart text-danger" /> by{" "}
-            <a href="http://www.4geeksacademy.com">4Geeks Academy</a>
-        </p>
-    </footer>
-);
+const Footer = () => {
+    return (
+        <div className=" border-top border-5 footer mt-5 text-center container-fluid d-flex justify-content-between navbar-expand-lg py-1 custom-bg fixed-bottom bg-dark">
+            <div className='text-light'>Made by <strong>Ignacio Quirós</strong></div>
+            <div className="m-2">
+                <a href="https://github.com/IgnacioQuiros" className="m-2 text-light">Github!</a>
+                <a href="https://es.linkedin.com/in/ignacio-quir%C3%B3s-sordo-137781184" className="my-0 text-light">Linkedin!</a>
+            </div>
+        </div>
+    )
+}
 
-
-export default Footer;
+export default Footer

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { Context } from '../store/appContext';
-import "../../styles/forms.css"; // Asegúrate de que esta ruta sea correcta
+import "../../styles/forms.css";
 
 const Login = () => {
     const { actions } = useContext(Context);
@@ -17,7 +17,11 @@ const Login = () => {
             await actions.login(email, password);
             navigate('/private');
         } catch (err) {
-            setError(err.message || "Login failed");
+            if (err.message === "Bad email or password") {
+                setError("Incorrect email or password. Please try again.");
+            } else {
+                setError("An unexpected error occurred. Please try again later.");
+            }
         }
     };
 

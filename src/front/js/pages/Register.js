@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { Context } from '../store/appContext';
-import "../../styles/forms.css"; // Asegúrate de que esta ruta sea correcta
+import "../../styles/forms.css";
 
 const Register = () => {
     const { actions } = useContext(Context);

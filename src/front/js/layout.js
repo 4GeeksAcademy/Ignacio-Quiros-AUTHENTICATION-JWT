@@ -3,11 +3,11 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ScrollToTop from './component/scrollToTop';
 import { BackendURL } from './component/backendURL';
 import { Home } from './pages/home';
-import Private from './pages/Private'; // Verifica que Private esté correctamente importado
-import Login from './pages/Login'; // Asegúrate de que Login esté importado correctamente
-import Register from './pages/Register'; // Asegúrate de que Register esté importado correctamente
-import Navbar from './component/Navbar'; // Corregir importación
-import Footer from './component/Footer'; // Corregir importación
+import Private from './pages/Private'; 
+import Login from './pages/Login'; 
+import Register from './pages/Register'; 
+import Navbar from './component/Navbar'; 
+import Footer from './component/Footer'; 
 import injectContext from './store/appContext';
 
 const Layout = () => {
